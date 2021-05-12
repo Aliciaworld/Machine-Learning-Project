@@ -1,0 +1,71 @@
+The general machine learning projects will follow the following pipeline. However, the detailed implementation can vary. For example, oftentimes we will iterate some procedures, such as feature engineering and selection etc.
+
+Machine Learning Workflow:
+1. Data cleaning and formatting
+2. Exploratory Data Analysis(EDA)
+3. Feature engineering and selection
+4. Establish a baseline and compare different models on a performance metric
+5. Perform hyperparameter tuning on the best model to optimize it 
+6. Evaluate the best model on the testing set
+7. Interpret the model results
+8. Draw conclusions and write a well-documented report
+
+
+1. Data cleaning and formatting
+   1.1 Load in the Data and Examine 
+       The defination of the target;
+       Examine missing value: "Not Avaiable" or "np.nan". "Not Available" means the columns with numbers will not be represented as "numeric", and be "object" type instead ;
+   
+   1.2 Data Type 
+       Check the all the column type by using 'data.info()'
+  
+   1.3 Convert Data to Correct Types
+       Convert object-type columns with numbers and 'Not Available' into numeric datatype(float): "data.replace({'Not Available': np.nan})"
+	   Convert object-type columns that contain numeric values into numeric datatype: for col in list(data.columns):
+	                                                                                       # Select columns that should be numeric
+																						   if('##' in col or '##' in col):
+                    	                                                                            data[col] = data[col].astype(float)
+   
+   1.4 Missing Values 
+       Missing values are fine when we do Exploratory Data Analysis, but they have to be filled in for machine learning methods.
+	   For analysize missing values, we usually calculate the number of missing values and the percentage of the total missing values for each column: 
+	   def missing_values (df):
+	   		# total missing values
+			mis_val = df.isnull().sum()
+			
+			# percentage of missing values
+			mis_val_percent = 100*df.isnull().sum() / len(df)
+			
+			# make a table with the result
+			mis_val_table = pd.concat([mis_val, mis_val_percent], axis=1)
+			
+			# rename the columns
+			mis_val_table_ren_columns = mis_val_table.rename(columns={0: 'Missing Values', 1: '% of Total Values'})
+			
+			# sort the table by percentage of missing descending
+			mis_val_table_ren_columns = mis_val_table_ren_columns[mis_val_table_ren_columns.iloc[:, 1] !=0].sort_values(ascending=False).round(1)
+			
+			# print summary information
+			print ('Your selected dataframe has ' + str(df.shape[1]) + ' columns.\n'
+			       'There are ' + str(mis_val_table_ren_columns.shape[0] + ' columns that have missing values.')
+		    
+			# return the dataframe with missing information
+			return mis_val_table_ren_columns
+	    
+		# get the columns with > n% missing
+		missing_df = missing_values(data)
+		missing_columns = list(missing_df[missing_df['% of Total Values']>50].index)		
+		data = data.drop(columns = list(missing_columns))
+		print('We will remove %d columns that have more than 50% missing values.' % len(missing_columns))																					  
+																								  
+2. Exploratory Data Analysis(EDA)
+   EDA is an open-ended process where we make plots and calculate statistics in order to explore our data. The purpose is to find anomalies, patterns, trends, or relationships. 
+   2.1
+3. Feature engineering and selection
+
+4. Establish a baseline and compare different models on a performance metric
+5. Perform hyperparameter tuning on the best model to optimize it 
+6. Evaluate the best model on the testing set
+
+7. Interpret the model results
+8. Draw conclusions and write a well-documented report
