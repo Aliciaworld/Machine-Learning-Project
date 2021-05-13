@@ -23,7 +23,7 @@ Machine Learning Workflow:
        Convert object-type columns with numbers and 'Not Available' into numeric datatype(float): "data.replace({'Not Available': np.nan})"
 	   Convert object-type columns that contain numeric values into numeric datatype: for col in list(data.columns):
 	                                                                                       # Select columns that should be numeric
-																						   if('##' in col or '##' in col):
+											       if('##' in col or '##' in col):
                     	                                                                            data[col] = data[col].astype(float)
    
    1.4 Missing Values 
@@ -60,7 +60,43 @@ Machine Learning Workflow:
 																								  
 2. Exploratory Data Analysis(EDA)
    EDA is an open-ended process where we make plots and calculate statistics in order to explore our data. The purpose is to find anomalies, patterns, trends, or relationships. 
-   2.1
+   2.1 Single Variable Plots
+       such as 'plt.hist(data['##'].dropna())'
+   
+   2.2 Detect If Outlier and remove
+       outliers are extreme values. One of its defination are any data values which lie more than 3 times the interquartile range below the first quartile or above the third quartile.
+       On the low end, an extreme outlier is below 'First Quartile - 3* Interquartile Range'
+       On the right end, an extreme outlier is above 'Third Quartile + 3* Interquartile Range'
+       
+       2.2.1 Find the outliers by above hist plot combined with the following:
+       data['##'].describe()
+       data['##'].dropna().sort_values().tail()
+       
+       2.2.2 Remove outlier
+       # Calculate first and third quartile
+       first_quartile = data['##'].describe()['25%']
+       third_quartile = data['##'].describe()['75%']
+       
+       # Interquartile range
+       iqr = third_quartile - first_quartile
+       
+       # remove outliers
+       data = data[(data['##'] > (first_quartile -3*iqr) & (data['##'] < (thir_quartile + 3*iqr)]
+       
+    2.3 Look for Relationships (between categorical variables and target)
+        For example:
+	types = data.dropna(subset=['target']
+	types = type['##'].value_counts()
+	types = list(types[types.values > 100].index)
+	
+	for type in types:
+		subset = data[data['##'] == type]
+		sns.kdeplot(subset['target'].dropna(), label=type)
+	
+	plt.xlable('$$', size = 20)
+	plt.ylabel('$$', size = 20)
+	plt.title('$$', size= 28)
+	## For any categorical variable, it have to be one-hot encoded before it is feed into a machine learning model.
 3. Feature engineering and selection
 
 4. Establish a baseline and compare different models on a performance metric
