@@ -196,6 +196,14 @@ For feature selection , we should remove the collinear features
 	 features.shape
      
 	 # Feature Selection
+	 Highly collinear features have a significant correlation coefficent between them. They are highly correlated because they are just slightly different means of calculating target. Removing collinear features is a method to reduce model complexity by decreasing the number of features and can help to increase model generalization.
+	 # Find highly collinear features
+	 plt.plot(x,y)
+	 plt.title('???, R= %0.4f' % np.corrcoef(data[['??',"??']].dropna(), rowvar=False)[0][1])
+	 
+	 We will remove collinear features that have a correlation coefficient above a certain threshold with each other. For example, we can use a threshold of 0.6 which remove one of a pair of features if the correlation coefficient between the features exceeds this value.
+	 This function is adapted from Stack Overflow answer(https://stackoverflow.com/questions/29294983/how-to-calculate-correlation-between-all-columns-and-remove-highly-correlated-on/43104383#43104383)
+	 ## function to remove the collinear features
 	 
 4. Establish a baseline and compare different models on a performance metric
 5. Perform hyperparameter tuning on the best model to optimize it 
