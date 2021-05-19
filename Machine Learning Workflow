@@ -60,7 +60,7 @@ Machine Learning Workflow:
 																								  
 2. Exploratory Data Analysis(EDA)
    EDA is an open-ended process where we make plots and calculate statistics in order to explore our data. The purpose is to find anomalies, patterns, trends, or relationships. 
-   2.1 Single Variable Plots
+   2.1 Single Variable Plots(Distribution of targets)
        such as 'plt.hist(data['##'].dropna())'
    
    2.2 Detect If Outlier and remove
